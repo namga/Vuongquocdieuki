@@ -64,3 +64,11 @@ npx cap open ios
 - Dữ liệu học được lưu cục bộ trong trình duyệt/WebView trên thiết bị. Gỡ ứng dụng hoặc xóa dữ liệu có thể làm mất tiến trình.
 - Chưa có đồng bộ nhiều thiết bị, tài khoản phụ huynh, CMS nội dung hoặc analytics.
 - Không chứa quảng cáo hay mua hàng.
+
+
+## App icon Android
+The Android GitHub Actions workflow applies the branded Bé Học Vui icon into Android `mipmap` resources after generating/syncing the Capacitor project. Re-run the Android workflow and install the newly generated APK; an APK already downloaded will keep its old icon.
+
+
+## iOS workflow troubleshooting
+The iOS Simulator workflow disables Xcode's generated Swift asset-symbol extensions to avoid a known class of failures compiling `GeneratedAssetSymbols.swift` on some Xcode runner configurations. If it still fails, expand the log lines immediately above `Command SwiftCompile failed`; the first `error:` line identifies the remaining root cause.

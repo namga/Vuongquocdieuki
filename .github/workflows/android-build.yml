@@ -44,6 +44,9 @@ jobs:
       - name: Sync Capacitor
         run: npx cap sync android
 
+      - name: Apply Bé Học Vui app icon
+        run: npm run cap:android:icon
+
       - name: Build debug APK
         run: |
           chmod +x android/gradlew
