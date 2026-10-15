@@ -1,0 +1,21 @@
+{
+  "name": "be-hoc-vui-vuong-quoc-ky-dieu",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Game giáo dục tiếng Việt cho trẻ 5-10 tuổi, PWA và Capacitor Android/iOS",
+  "scripts": {
+    "start": "npx http-server www -p 8080",
+    "cap:sync": "cap sync",
+    "cap:android": "cap open android",
+    "cap:ios": "cap open ios"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.4.3",
+    "@capacitor/core": "^7.4.3",
+    "@capacitor/ios": "^7.4.3"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.4.3",
+    "http-server": "^14.1.1"
+  }
+}

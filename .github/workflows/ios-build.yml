@@ -1,0 +1,58 @@
+name: Build iOS Simulator App
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 45
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate iOS project
+        run: npx cap add ios
+
+      - name: Sync Capacitor
+        run: npx cap sync ios
+
+      - name: Build for iOS Simulator (unsigned)
+        run: |
+          xcodebuild \
+            -project ios/App/App.xcodeproj \
+            -scheme App \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath build/DerivedData \
+            CODE_SIGNING_ALLOWED=NO \
+            build
+
+      - name: Package simulator app
+        run: |
+          APP_PATH="build/DerivedData/Build/Products/Debug-iphonesimulator/App.app"
+          test -d "$APP_PATH"
+          ditto -c -k --sequesterRsrc --keepParent "$APP_PATH" Be-Hoc-Vui-iOS-Simulator-App.zip
+
+      - name: Upload iOS Simulator artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Be-Hoc-Vui-iOS-Simulator-App
+          path: Be-Hoc-Vui-iOS-Simulator-App.zip
+          if-no-files-found: error
+          retention-days: 14

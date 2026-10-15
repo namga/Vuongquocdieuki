@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#2d9463"><meta name="description" content="Bé Học Vui – Vương Quốc Kỳ Diệu">
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="assets/icon-192.png">
+<link rel="stylesheet" href="styles.css"><title>Bé Học Vui – Vương Quốc Kỳ Diệu</title>
+</head>
+<body>
+<div class="app-shell">
+<header class="topbar">
+  <button class="icon-btn" id="profileBtn" aria-label="Hồ sơ">👧</button>
+  <div class="brand"><span class="brand-mark">✨</span><div><strong>Bé Học Vui</strong><small>Vương Quốc Kỳ Diệu</small></div></div>
+  <div class="star-pill">⭐ <span id="starCount">0</span></div>
+</header>
+<main id="app" aria-live="polite"></main>
+<nav class="bottom-nav" aria-label="Điều hướng chính">
+  <button data-tab="home" class="nav-item active"><span>🏰</span><small>Vương quốc</small></button>
+  <button data-tab="learn" class="nav-item"><span>📚</span><small>Học tập</small></button>
+  <button data-tab="collection" class="nav-item"><span>🎒</span><small>Bộ sưu tập</small></button>
+  <button data-tab="progress" class="nav-item"><span>🌱</span><small>Tiến bộ</small></button>
+</nav>
+</div>
+<div id="toast" class="toast" role="status"></div>
+<script src="app.js"></script>
+<script>if('serviceWorker' in navigator && location.protocol!=='file:') navigator.serviceWorker.register('./sw.js').catch(()=>{});</script>
+</body></html>
