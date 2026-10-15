@@ -1,4 +1,4 @@
-# Bé Học Vui – Vương Quốc Kỳ Diệu
+# Vương Quốc Diệu Kì
 
 Game giáo dục tiếng Việt cho trẻ 5–10 tuổi, dùng chung codebase Web/PWA và Android/iOS qua Capacitor.
 
@@ -22,7 +22,7 @@ npm run start
 Mở `http://localhost:8080`.
 
 ## Đưa lên GitHub
-1. Tạo repository mới, ví dụ `be-hoc-vui-vuong-quoc-ky-dieu`.
+1. Tạo repository mới, ví dụ `vuong-quoc-dieu-ki`.
 2. Giải nén ZIP này và tải toàn bộ nội dung lên repository (thư mục `.github/workflows` phải được giữ nguyên).
 3. Có thể dùng GitHub web: **Add file → Upload files**, kéo thả toàn bộ nội dung.
 4. Hoặc dùng Git:
@@ -31,7 +31,7 @@ git init
 git add .
 git commit -m "Initial Be Hoc Vui game MVP"
 git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/be-hoc-vui-vuong-quoc-ky-dieu.git
+git remote add origin https://github.com/YOUR_USERNAME/vuong-quoc-dieu-ki.git
 git push -u origin main
 ```
 
@@ -67,8 +67,23 @@ npx cap open ios
 
 
 ## App icon Android
-The Android GitHub Actions workflow applies the branded Bé Học Vui icon into Android `mipmap` resources after generating/syncing the Capacitor project. Re-run the Android workflow and install the newly generated APK; an APK already downloaded will keep its old icon.
+The Android GitHub Actions workflow applies the branded Vương Quốc Diệu Kì icon into Android `mipmap` resources after generating/syncing the Capacitor project. Re-run the Android workflow and install the newly generated APK; an APK already downloaded will keep its old icon.
 
 
 ## iOS workflow troubleshooting
 The iOS Simulator workflow disables Xcode's generated Swift asset-symbol extensions to avoid a known class of failures compiling `GeneratedAssetSymbols.swift` on some Xcode runner configurations. If it still fails, expand the log lines immediately above `Command SwiftCompile failed`; the first `error:` line identifies the remaining root cause.
+
+
+## Audio câu hỏi (bản cập nhật)
+- Android/iOS dùng plugin native `@capacitor-community/text-to-speech` trước, thay vì phụ thuộc hoàn toàn vào `speechSynthesis` trong WebView.
+- PWA/browser vẫn dùng Web Speech API làm phương án dự phòng.
+- Cần có dịch vụ TTS và giọng tiếng Việt (`vi-VN`) được cài trên thiết bị. Nếu thiết bị không có giọng tiếng Việt, native TTS có thể báo lỗi hoặc dùng giọng mặc định tùy engine.
+- Sau khi cập nhật, phải chạy lại GitHub Actions và cài APK mới; APK đã tải trước đó không chứa thay đổi.
+
+
+## Nội dung học tập mở rộng
+Bản nội dung mở rộng có 15 bài học với khoảng 65 câu hỏi, gồm: đếm số, cộng, trừ, hình học, tiền và thời gian, chữ cái, đọc hiểu, động vật/thực vật, sức khỏe, an toàn giao thông, môi trường, vũ trụ, tiếng Anh cơ bản và cảm xúc/tình bạn. Các câu hỏi có gợi ý và giải thích; độ tuổi được ghi theo từng bài.
+
+
+## Đổi tên ứng dụng
+Tên hiển thị của ứng dụng đã đổi thành **Vương Quốc Diệu Kì** cho PWA và dự án Capacitor Android/iOS. `appId` vẫn giữ nguyên `com.behocvui.vuongquockydieu` để bản cài mới có thể nâng cấp bản cũ thay vì xuất hiện như một ứng dụng khác. Sau khi đổi tên, cần chạy lại GitHub Actions để tên mới xuất hiện trên APK mới.

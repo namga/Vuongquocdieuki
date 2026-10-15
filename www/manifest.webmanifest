@@ -1,7 +1,7 @@
 {
-  "name": "Bé Học Vui – Vương Quốc Kỳ Diệu",
-  "short_name": "Bé Học Vui",
-  "description": "Học mà chơi – Chơi mà học dành cho bé 5–10 tuổi",
+  "name": "Vương Quốc Diệu Kì",
+  "short_name": "Diệu Kì",
+  "description": "Game giáo dục vui nhộn dành cho trẻ 5–10 tuổi",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

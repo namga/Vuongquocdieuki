@@ -1,3 +1,4 @@
+import { TextToSpeech } from '@capacitor-community/text-to-speech';
 (() => {
 'use strict';
 const $ = (s,root=document)=>root.querySelector(s);
@@ -38,7 +39,78 @@ const lessons=[
   q('logic1','Số tiếp theo là số nào? 2, 4, 6, ...','🔢',[7,8,9,10],8,'Mỗi lần tăng thêm 2.','Dãy số tăng thêm 2: 2, 4, 6, 8.','patterns'),
   q('logic2','Hình nào tiếp theo? 🔴 🔵 🔴 🔵 ...','🔴 🔵',[ '🔴','🔵','🟢','🟡'],'🔴','Hai màu đỏ và xanh luân phiên nhau.','Sau màu xanh là màu đỏ.','patterns'),
   q('logic3','Bạn đi 2 bước rồi thêm 1 bước. Tổng cộng mấy bước?','👣 👣 + 👣',[2,3,4,5],3,'Cộng số bước đã đi.','2 + 1 = 3 bước.','sequence')
+ ]},
+ {id:'subtract',world:'math',title:'Phép trừ thần kỳ',icon:'➖',type:'quiz',skill:'Phép trừ',age:'6–8 tuổi',description:'Bớt đi và tìm kết quả',questions:[
+  q('sub1','Có 5 quả bóng, bay mất 2 quả. Còn mấy quả?','⚽ ⚽ ⚽ ⚽ ⚽  →  💨 💨',[2,3,4,5],3,'Bắt đầu từ 5 rồi bớt đi 2.','5 − 2 = 3 quả bóng.','subtraction'),
+  q('sub2','7 − 3 bằng mấy?','🔢',[3,4,5,6],4,'Đếm lùi ba bước từ 7.','7 − 3 = 4.','subtraction'),
+  q('sub3','Có 9 chiếc kẹo, bé ăn 1 chiếc. Còn bao nhiêu?','🍬 🍬 🍬 🍬 🍬 🍬 🍬 🍬 🍬',[7,8,9,10],8,'Bớt một thì còn số liền trước.','9 − 1 = 8.','subtraction'),
+  q('sub4','10 − 5 bằng mấy?','🔟',[4,5,6,7],5,'Một nửa của 10 là 5.','10 − 5 = 5.','subtraction'),
+  q('sub5','6 − 2 bằng mấy?','🦋 🦋 🦋 🦋 🦋 🦋',[3,4,5,6],4,'Đếm lùi từ 6 hai bước.','6 − 2 = 4.','subtraction')
+ ]},
+ {id:'shapes',world:'math',title:'Thế giới hình khối',icon:'🔺',type:'quiz',skill:'Hình học cơ bản',age:'5–8 tuổi',description:'Nhận biết hình và đặc điểm',questions:[
+  q('shape1','Hình nào có 3 cạnh?','🔺 🔵 🟦',['Hình tròn','Hình tam giác','Hình vuông','Hình chữ nhật'],'Hình tam giác','Hãy đếm các cạnh thẳng của từng hình.','Hình tam giác có 3 cạnh.','shapes'),
+  q('shape2','Hình vuông có bao nhiêu cạnh?','🟦',[3,4,5,6],4,'Đếm bốn cạnh xung quanh hình.','Hình vuông có 4 cạnh bằng nhau.','shapes'),
+  q('shape3','Vật nào có dạng hình cầu?','⚽ 📕 🥪',['Quả bóng','Quyển sách','Miếng bánh'],'Quả bóng','Vật nào tròn đều như quả bóng?','Quả bóng có dạng gần giống hình cầu.','shapes'),
+  q('shape4','Hình tròn có góc nhọn không?','⭕',['Có 1 góc','Có 4 góc','Không có góc','Có 3 góc'],'Không có góc','Hãy nhìn đường cong liền mạch của hình tròn.','Hình tròn không có cạnh thẳng và không có góc.','shapes'),
+  q('shape5','Hình chữ nhật thường có bao nhiêu góc vuông?','▭',[2,3,4,5],4,'Đếm bốn góc của hình.','Hình chữ nhật có 4 góc vuông.','shapes')
+ ]},
+ {id:'moneytime',world:'math',title:'Tiền và thời gian',icon:'⏰',type:'quiz',skill:'Toán thực tế',age:'7–10 tuổi',description:'Làm quen đồng hồ và phép tính đời sống',questions:[
+  q('mt1','Một giờ có bao nhiêu phút?','🕐',[30,45,60,100],60,'Kim phút đi hết một vòng mặt đồng hồ.','Một giờ có 60 phút.','time'),
+  q('mt2','Bây giờ là 3 giờ. Một giờ nữa là mấy giờ?','🕒',['2 giờ','3 giờ','4 giờ','5 giờ'],'4 giờ','Đi thêm một số trên mặt đồng hồ.','3 giờ cộng 1 giờ là 4 giờ.','time'),
+  q('mt3','Bé có 5.000 đồng, mua bút giá 2.000 đồng. Còn bao nhiêu?','✏️ 💵',[2000,3000,4000,5000],3000,'Lấy số tiền có trừ giá chiếc bút.','5.000 − 2.000 = 3.000 đồng.','money'),
+  q('mt4','Một tuần có bao nhiêu ngày?','📅',[5,6,7,8],7,'Đếm từ thứ Hai đến Chủ nhật.','Một tuần có 7 ngày.','time'),
+  q('mt5','Nửa giờ bằng bao nhiêu phút?','⏳',[15,20,30,60],30,'Nửa của 60 là bao nhiêu?','Nửa giờ bằng 30 phút.','time')
+ ]},
+ {id:'vietnameseletters',world:'language',title:'Chữ cái vui nhộn',icon:'🔤',type:'quiz',skill:'Nhận biết chữ cái',age:'5–7 tuổi',description:'Nhận diện chữ cái đầu từ',questions:[
+  q('letter1','Từ “mèo” bắt đầu bằng chữ nào?','🐱',['M','B','T','C'],'M','Nghe âm đầu của từ mèo.','“Mèo” bắt đầu bằng chữ M.','letters'),
+  q('letter2','Từ “cá” bắt đầu bằng chữ nào?','🐟',['G','C','L','N'],'C','Phát âm chậm từ cá.','“Cá” bắt đầu bằng chữ C.','letters'),
+  q('letter3','Chữ nào là nguyên âm?','🔤',['B','T','A','M'],'A','Nguyên âm có thể phát âm thành tiếng rõ ràng.','A là một nguyên âm trong tiếng Việt.','letters'),
+  q('letter4','Từ nào có dấu sắc?','📚',['bà','bé','bò','bù'],'bé','Tìm tiếng có dấu nhỏ đi lên trên chữ.','“Bé” có dấu sắc ở chữ e.','letters'),
+  q('letter5','Từ nào chỉ đồ vật dùng để viết?','✏️',['bàn','bút','bát','bóng'],'bút','Đồ vật này thường cầm trên tay khi viết.','Bút dùng để viết hoặc vẽ.','letters')
+ ]},
+ {id:'reading',world:'language',title:'Đọc hiểu câu ngắn',icon:'📘',type:'quiz',skill:'Đọc hiểu',age:'6–9 tuổi',description:'Đọc câu và suy luận đơn giản',questions:[
+  q('read1','“Lan tưới cây mỗi sáng.” Lan làm gì?','🌱',['Tưới cây','Đá bóng','Ngủ','Nấu cơm'],'Tưới cây','Tìm hành động được nhắc trong câu.','Lan tưới cây mỗi sáng.','reading'),
+  q('read2','“Trời mưa, Nam mở ô.” Vì sao Nam mở ô?','☔',['Để che mưa','Để ăn cơm','Để đi ngủ','Để vẽ tranh'],'Để che mưa','Ô giúp chúng ta tránh điều gì từ trên trời rơi xuống?','Nam mở ô để che mưa.','reading'),
+  q('read3','“Bé cho cá ăn rồi thay nước.” Bé chăm sóc con gì?','🐠',['Mèo','Cá','Chim','Thỏ'],'Cá','Câu nhắc đến việc cho ăn và thay nước.','Bé đang chăm sóc cá.','reading'),
+  q('read4','“Minh có 2 quyển truyện và mượn thêm 1 quyển.” Minh có tất cả mấy quyển?','📚',[2,3,4,5],3,'Cộng số truyện có sẵn với số mượn thêm.','2 + 1 = 3 quyển truyện.','reading'),
+  q('read5','Việc nào nên làm sau khi đọc sách?','📖',['Cất sách gọn gàng','Xé trang sách','Vẽ lên sách','Ném sách'],'Cất sách gọn gàng','Hãy chọn cách giữ gìn sách.','Cất sách gọn gàng giúp sách bền và dễ tìm.','reading')
+ ]},
+ {id:'bodyhealth',world:'nature',title:'Cơ thể khỏe mạnh',icon:'🧼',type:'quiz',skill:'Sức khỏe cá nhân',age:'5–9 tuổi',description:'Thói quen vệ sinh và chăm sóc bản thân',questions:[
+  q('health1','Khi nào nên rửa tay bằng xà phòng?','🧼',['Trước khi ăn và sau khi đi vệ sinh','Chỉ khi tay thơm','Không bao giờ','Chỉ trước khi ngủ'],'Trước khi ăn và sau khi đi vệ sinh','Bàn tay có thể mang vi trùng dù nhìn vẫn sạch.','Rửa tay bằng xà phòng trước khi ăn và sau khi đi vệ sinh giúp giảm vi trùng.','health'),
+  q('health2','Thói quen nào tốt cho răng?','🦷',['Đánh răng đều đặn','Ăn kẹo cả ngày','Không uống nước','Dùng chung bàn chải'],'Đánh răng đều đặn','Chọn việc giúp làm sạch răng.','Đánh răng đều đặn giúp bảo vệ răng miệng.','health'),
+  q('health3','Đồ uống nào nên chọn thường xuyên nhất?','🥤',['Nước lọc','Nước ngọt có ga','Nước tăng lực','Siro thật ngọt'],'Nước lọc','Cơ thể cần nước để hoạt động.','Nước lọc là lựa chọn tốt để uống hằng ngày.','nutrition'),
+  q('health4','Khi qua đường, bé nên làm gì?','🚦',['Đi cùng người lớn và quan sát tín hiệu','Chạy thật nhanh','Vừa đi vừa nhìn điện thoại','Chơi đùa giữa đường'],'Đi cùng người lớn và quan sát tín hiệu','Đường phố có xe cộ nên cần được người lớn hướng dẫn.','Hãy đi cùng người lớn, quan sát tín hiệu và qua đường ở nơi an toàn.','safety'),
+  q('health5','Khi cảm thấy không khỏe, bé nên làm gì?','🤒',['Báo cho người lớn đáng tin cậy','Giấu mọi người','Tự uống thuốc bất kỳ','Bỏ ăn cả ngày'],'Báo cho người lớn đáng tin cậy','Người lớn có thể giúp bé được chăm sóc phù hợp.','Hãy nói với cha mẹ, thầy cô hoặc người lớn đáng tin cậy.','health')
+ ]},
+ {id:'environment',world:'nature',title:'Bảo vệ Trái Đất',icon:'🌍',type:'quiz',skill:'Môi trường',age:'5–10 tuổi',description:'Phân loại rác và tiết kiệm tài nguyên',questions:[
+  q('env1','Vỏ chuối nên bỏ vào đâu nếu có thùng rác hữu cơ?','🍌',['Thùng rác hữu cơ','Bể cá','Ngăn đông','Bàn học'],'Thùng rác hữu cơ','Vỏ trái cây có thể phân hủy tự nhiên.','Vỏ chuối có thể được phân loại vào rác hữu cơ.','environment'),
+  q('env2','Khi rời phòng và không còn ai dùng đèn, nên làm gì?','💡',['Tắt đèn','Bật thêm đèn','Để đèn sáng cả ngày','Che đèn bằng giấy'],'Tắt đèn','Tắt thiết bị không cần dùng giúp tiết kiệm điện.','Tắt đèn khi không cần giúp tiết kiệm năng lượng.','energy'),
+  q('env3','Việc nào giúp tiết kiệm nước?','🚰',['Khóa vòi khi đánh răng','Để vòi chảy liên tục','Rửa sân bằng vòi cả giờ','Chơi nước cả ngày'],'Khóa vòi khi đánh răng','Nước không cần chảy trong suốt lúc đánh răng.','Khóa vòi khi đánh răng giúp tiết kiệm nước.','water'),
+  q('env4','Khi đi dã ngoại, rác nên được xử lý thế nào?','🏕️',['Thu gom và bỏ đúng nơi','Để lại dưới gốc cây','Ném xuống suối','Chôn mọi loại rác tùy ý'],'Thu gom và bỏ đúng nơi','Hãy giữ nơi vui chơi sạch sẽ cho mọi người và động vật.','Thu gom rác và bỏ đúng nơi giúp bảo vệ thiên nhiên.','environment'),
+  q('env5','Cây xanh giúp ích gì cho môi trường?','🌳',['Tạo bóng mát và hấp thụ khí carbon dioxide','Làm bẩn không khí','Ngăn mọi cơn mưa','Tạo ra rác nhựa'],'Tạo bóng mát và hấp thụ khí carbon dioxide','Cây sử dụng khí carbon dioxide trong quá trình quang hợp.','Cây tạo bóng mát và hấp thụ carbon dioxide khi quang hợp.','plants')
+ ]},
+ {id:'spacefacts',world:'space',title:'Khám phá vũ trụ',icon:'🪐',type:'quiz',skill:'Khoa học tự nhiên',age:'6–10 tuổi',description:'Hành tinh, Mặt Trời và quan sát bầu trời',questions:[
+  q('space1','Trái Đất quay quanh thiên thể nào?','🌍',['Mặt Trời','Mặt Trăng','Sao Hỏa','Sao Kim'],'Mặt Trời','Trái Đất là một hành tinh trong Hệ Mặt Trời.','Trái Đất quay quanh Mặt Trời.','space'),
+  q('space2','Mặt Trăng là gì?','🌙',['Vệ tinh tự nhiên của Trái Đất','Một ngôi sao','Một đại dương','Một đám mây'],'Vệ tinh tự nhiên của Trái Đất','Mặt Trăng chuyển động quanh Trái Đất.','Mặt Trăng là vệ tinh tự nhiên của Trái Đất.','space'),
+  q('space3','Nguồn sáng tự nhiên chính của Trái Đất là gì?','☀️',['Mặt Trời','Sao biển','Cầu vồng','Mây'],'Mặt Trời','Ánh sáng ban ngày đến từ ngôi sao gần Trái Đất nhất.','Mặt Trời cung cấp phần lớn ánh sáng và năng lượng cho Trái Đất.','space'),
+  q('space4','Hành tinh chúng ta đang sống tên là gì?','🌏',['Sao Hỏa','Trái Đất','Sao Mộc','Sao Thổ'],'Trái Đất','Đó là hành tinh có đại dương và sự sống mà chúng ta biết.','Chúng ta sống trên hành tinh Trái Đất.','space'),
+  q('space5','Ngày và đêm xảy ra chủ yếu vì điều gì?','🌗',['Trái Đất tự quay quanh trục','Mặt Trời tắt vào ban đêm','Mặt Trăng che Mặt Trời mỗi ngày','Các ngôi sao di chuyển quanh nhà'],'Trái Đất tự quay quanh trục','Một phía của Trái Đất hướng về Mặt Trời trong khi phía kia khuất sáng.','Trái Đất tự quay quanh trục nên các nơi lần lượt có ngày và đêm.','space')
+ ]},
+ {id:'english',world:'language',title:'English đầu tiên',icon:'🇬🇧',type:'quiz',skill:'Tiếng Anh cơ bản',age:'7–10 tuổi',description:'Từ tiếng Anh quen thuộc qua hình ảnh',questions:[
+  q('eng1','“Apple” có nghĩa là gì?','🍎',['Quả táo','Quả chuối','Con mèo','Quyển sách'],'Quả táo','Apple là tên một loại quả thường có màu đỏ hoặc xanh.','Apple nghĩa là quả táo.','english'),
+  q('eng2','“Cat” là con gì?','🐱',['Con chó','Con mèo','Con cá','Con chim'],'Con mèo','Con vật này thường kêu meo meo.','Cat nghĩa là con mèo.','english'),
+  q('eng3','“Hello” dùng để làm gì?','👋',['Chào hỏi','Tạm biệt','Cảm ơn','Xin lỗi'],'Chào hỏi','Đây là lời thường dùng khi gặp ai đó.','Hello có nghĩa là xin chào.','english'),
+  q('eng4','Số “three” là số mấy?','🔢',[2,3,4,5],3,'One, two, rồi đến từ này.','Three nghĩa là số ba.','english'),
+  q('eng5','“Thank you” có nghĩa là gì?','😊',['Cảm ơn','Xin chào','Tạm biệt','Chúc ngủ ngon'],'Cảm ơn','Dùng khi muốn bày tỏ sự biết ơn.','Thank you nghĩa là cảm ơn.','english')
+ ]},
+ {id:'feelings',world:'nature',title:'Cảm xúc và tình bạn',icon:'💗',type:'quiz',skill:'Cảm xúc xã hội',age:'5–9 tuổi',description:'Nhận biết cảm xúc và cách cư xử tử tế',questions:[
+  q('feel1','Bạn mình buồn vì làm rơi đồ chơi. Bé nên làm gì?','🧸',['Hỏi thăm và giúp bạn nếu có thể','Cười chê bạn','Giấu đồ chơi của bạn','Bỏ mặc bạn để trêu'],'Hỏi thăm và giúp bạn nếu có thể','Hãy nghĩ cách làm bạn cảm thấy được quan tâm.','Hỏi thăm và giúp đỡ là cách thể hiện sự đồng cảm.','empathy'),
+  q('feel2','Khi tức giận, cách nào có thể giúp bé bình tĩnh?','🌬️',['Hít thở chậm và nói với người lớn','Đánh bạn','Ném đồ vật','La hét vào mặt mọi người'],'Hít thở chậm và nói với người lớn','Dừng lại một chút giúp cơ thể dịu xuống.','Hít thở chậm và nhờ người lớn hỗ trợ là cách an toàn.','emotions'),
+  q('feel3','Khi muốn mượn đồ chơi của bạn, bé nên làm gì?','🪀',['Hỏi xin phép trước','Tự lấy mà không hỏi','Giấu đồ chơi','Giật khỏi tay bạn'],'Hỏi xin phép trước','Đồ của người khác cần được tôn trọng.','Hãy hỏi xin phép và chờ bạn đồng ý.','kindness'),
+  q('feel4','Nếu vô tình làm bạn buồn, bé có thể làm gì?','🤝',['Xin lỗi chân thành và sửa sai','Đổ lỗi cho bạn','Giả vờ không biết','Tiếp tục trêu bạn'],'Xin lỗi chân thành và sửa sai','Nhận trách nhiệm giúp hàn gắn tình bạn.','Xin lỗi và cố gắng sửa sai thể hiện sự tôn trọng.','kindness'),
+  q('feel5','Mỗi người có thể có cảm xúc khác nhau không?','🙂 😢',['Có, và ta nên lắng nghe nhau','Không ai được buồn','Chỉ một người được vui','Cảm xúc luôn giống nhau'],'Có, và ta nên lắng nghe nhau','Mọi người có trải nghiệm và cảm nhận riêng.','Mỗi người có thể cảm thấy khác nhau; hãy tôn trọng và lắng nghe.','emotions')
  ]}
+
 ];
 function q(id,prompt,visual,answers,answer,hint,explanation,skill){return{id,prompt,visual,answers,answer,hint,explanation,skill};}
 function fresh(){return{version:1,stars:0,coins:0,completed:[],attempts:[],skills:{},unlockedPets:['panda'],settings:{sound:true,age:'5-8',largeText:false},lastPlayed:null};}
@@ -64,19 +136,55 @@ function renderLearn(){app.innerHTML=`${head('Chọn chuyến phiêu lưu','Mỗ
 function renderWorld(){const w=worlds.find(x=>x.id===selectedWorld);const ls=lessons.filter(l=>l.world===selectedWorld);app.innerHTML=`${head(w.name,w.desc)}<div class="hero" style="min-height:135px"><h1 style="font-size:24px;max-width:72%">Cùng ${w.emoji} khám phá!</h1><p style="max-width:72%">Hoàn thành bài học để tích lũy kiến thức và sao.</p><div class="mascot">${w.emoji}</div></div><div class="section-head"><h2>Bài học trong vùng đất</h2><span>${ls.length} bài</span></div><div class="lesson-list">${ls.map(l=>lessonCard(l)).join('')}</div>`}
 function lessonCard(l){return `<button class="lesson-card" data-lesson="${l.id}"><span class="lesson-icon">${l.icon}</span><span class="lesson-info"><strong>${l.title}</strong><small>${l.age} · ${l.questions.length} câu · ${l.description}</small></span><span class="chevron">›</span></button>`}
 function startLesson(id){currentLesson=lessons.find(l=>l.id===id);if(!currentLesson)return;questionIndex=0;session={correct:0,firstTry:0,hints:0,answered:false,attempts:0,earned:0};state.lastPlayed=id;screen='game';render()}
-function speakQuestion(text){
- if(!state.settings.sound || !('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)) return;
+let speechRequestId = 0;
+async function stopSpeech(){
+ speechRequestId++;
+ try { await TextToSpeech.stop(); } catch {}
+ if ('speechSynthesis' in window) { try { window.speechSynthesis.cancel(); } catch {} }
+}
+async function speakQuestion(text){
+ if(!state.settings.sound) return;
+ const requestId = ++speechRequestId;
+ const cleanText = String(text).replace(/[🔢⭐🌙🌞]/gu,' ').replace(/\.\.\./g,' ').trim();
+ // In the Android/iOS app, use native device TTS first. This avoids relying
+ // on the often-missing speechSynthesis implementation in Android WebView.
+ try {
+  const isNative = !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
+  if (isNative) {
+   await TextToSpeech.stop().catch(()=>{});
+   if (requestId !== speechRequestId || !state.settings.sound) return;
+   await TextToSpeech.speak({
+    text: cleanText,
+    lang: 'vi-VN',
+    rate: 0.88,
+    pitch: 1.04,
+    volume: 1.0,
+    category: 'ambient'
+   });
+   return;
+  }
+ } catch (err) {
+  console.warn('Native TTS unavailable; trying browser speech:', err);
+ }
+ // PWA/browser fallback. Some browsers require the first speak to follow a tap.
+ if (!('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)) {
+  toast('Thiết bị chưa hỗ trợ đọc câu hỏi. Hãy kiểm tra dịch vụ Chuyển văn bản thành giọng nói.');
+  return;
+ }
  try {
   window.speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(String(text).replace(/[🔢⭐🌙🌞]/gu,' ').replace(/\.\.\./g,' '));
+  const utterance = new SpeechSynthesisUtterance(cleanText);
   utterance.lang = 'vi-VN';
   utterance.rate = 0.88;
   utterance.pitch = 1.04;
   const voices = window.speechSynthesis.getVoices();
   const vietnameseVoice = voices.find(v => /^vi(-|$)/i.test(v.lang));
   if (vietnameseVoice) utterance.voice = vietnameseVoice;
+  utterance.onerror = () => toast('Không phát được giọng đọc. Hãy nhấn nút loa hoặc kiểm tra giọng tiếng Việt trên thiết bị.');
   window.speechSynthesis.speak(utterance);
- } catch (e) { /* Speech is an enhancement; gameplay must still work without TTS. */ }
+ } catch (e) {
+  toast('Không thể phát âm thanh trên thiết bị này.');
+ }
 }
 function renderGame(){
  const l=currentLesson,q=l.questions[questionIndex];session.answered=false;
@@ -105,9 +213,8 @@ function finishLesson(){const l=currentLesson;const percent=Math.round(session.c
 function renderResult(){const percent=Math.round(session.correct/currentLesson.questions.length*100);app.innerHTML=`<section class="panel result"><div class="big">${percent>=80?'🏆':percent>=50?'🌟':'🌱'}</div><h1>${percent>=80?'Xuất sắc!':percent>=50?'Làm tốt lắm!':'Cùng luyện thêm nhé!'}</h1><p>Bé đã hoàn thành “${currentLesson.title}”. Mỗi lần thử là một bước tiến!</p><div class="stat-grid"><div class="stat"><strong>${session.correct}/${currentLesson.questions.length}</strong><small>Câu đúng</small></div><div class="stat"><strong>+${session.earned} ⭐</strong><small>Sao nhận được</small></div><div class="stat"><strong>${percent}%</strong><small>Kết quả</small></div></div><button class="primary full" data-action="replay">🔁 Chơi lại bài này</button><button class="secondary full" data-action="nextLesson">Khám phá bài khác →</button><button class="secondary full" data-action="home">Về vương quốc 🏰</button></section>`}
 const pets=[{id:'panda',name:'Gấu trúc Bông',emoji:'🐼',need:0},{id:'rabbit',name:'Thỏ Mây',emoji:'🐰',need:2},{id:'fox',name:'Cáo Đuôi Bông',emoji:'🦊',need:4},{id:'dino',name:'Khủng long Tí Hon',emoji:'🦕',need:7},{id:'unicorn',name:'Kỳ lân Cầu Vồng',emoji:'🦄',need:10},{id:'owl',name:'Cú Mèo Thông Thái',emoji:'🦉',need:12}];
 function renderCollection(){app.innerHTML=`${head('Bộ sưu tập','Những người bạn đồng hành của bé')}<section class="panel" style="margin-bottom:14px"><strong>🎒 Túi kho báu</strong><p style="margin:5px 0 0;color:var(--muted);font-size:13px">Bé có ${state.coins} xu ảo. Nhận thêm bằng cách học và khám phá.</p></section><div class="collection-grid">${pets.map(p=>{const unlocked=state.unlockedPets.includes(p.id)||state.completed.length>=p.need&&p.need===0;return `<div class="pet ${unlocked?'':'locked'}"><div class="pet-emoji">${unlocked?p.emoji:'🔒'}</div><strong>${p.name}</strong><small>${unlocked?'Bạn đồng hành của bé':`Hoàn thành ${p.need} bài để mở khóa`}</small></div>`}).join('')}</div><div class="section-head"><h2>🏡 Trang trí nhà</h2></div><section class="panel"><div style="font-size:44px;text-align:center">🏡 🌷 🌳</div><p style="text-align:center;color:var(--muted);font-size:13px">Góc nhà của bé sẽ có thêm đồ trang trí trong các bản cập nhật tiếp theo.</p></section>`}
-function renderProgress(){const attempts=state.attempts;const independent=attempts.filter(a=>a.correct&&a.firstTry).length;const accuracy=attempts.length?Math.round(attempts.filter(a=>a.correct).length/attempts.length*100):0;app.innerHTML=`${head('Tiến bộ của bé','Cùng nhìn lại những điều đã học')}<div class="stat-grid"><div class="stat"><strong>${state.completed.length}</strong><small>Bài hoàn thành</small></div><div class="stat"><strong>${accuracy}%</strong><small>Tỷ lệ đúng</small></div><div class="stat"><strong>${state.stars} ⭐</strong><small>Sao tích lũy</small></div></div><div class="section-head"><h2>🌱 Kỹ năng đang luyện</h2><span>${Object.keys(state.skills).length} kỹ năng</span></div><section class="panel">${Object.entries(state.skills).length?Object.entries(state.skills).map(([k,s])=>`<div class="skill-row"><span class="skill-emoji">${s.mastery>=80?'🌟':'🌱'}</span><div class="skill-body"><strong>${esc(({count:'Đếm số lượng',addition:'Phép cộng',vocab:'Từ vựng',habitat:'Môi trường sống',plants:'Thực vật',patterns:'Nhận biết quy luật',sequence:'Trình tự'}[k]||k))}</strong><small>${s.correct} câu đúng trên ${s.seen} lần trả lời · ${s.mastery>=80?'Đang rất tốt':'Tiếp tục luyện tập nhé'}</small><div class="skill-meter"><div style="width:${s.mastery}%"></div></div></div><strong>${s.mastery}%</strong></div>`).join(''):'<div class="empty">🌼 Bé hãy chơi bài đầu tiên để bắt đầu ghi nhận tiến bộ nhé!</div>'}</section><div class="section-head"><h2>📘 Gợi ý cho phụ huynh</h2></div><section class="panel"><p style="margin:0;font-size:13px;color:var(--muted)">Tỷ lệ đúng là chỉ số tham khảo. Để đánh giá ghi nhớ, hãy cho bé làm lại câu hỏi tương tự sau vài ngày và quan sát khả năng giải thích bằng lời của bé.</p></section>`}
+function renderProgress(){const attempts=state.attempts;const independent=attempts.filter(a=>a.correct&&a.firstTry).length;const accuracy=attempts.length?Math.round(attempts.filter(a=>a.correct).length/attempts.length*100):0;app.innerHTML=`${head('Tiến bộ của bé','Cùng nhìn lại những điều đã học')}<div class="stat-grid"><div class="stat"><strong>${state.completed.length}</strong><small>Bài hoàn thành</small></div><div class="stat"><strong>${accuracy}%</strong><small>Tỷ lệ đúng</small></div><div class="stat"><strong>${state.stars} ⭐</strong><small>Sao tích lũy</small></div></div><div class="section-head"><h2>🌱 Kỹ năng đang luyện</h2><span>${Object.keys(state.skills).length} kỹ năng</span></div><section class="panel">${Object.entries(state.skills).length?Object.entries(state.skills).map(([k,s])=>`<div class="skill-row"><span class="skill-emoji">${s.mastery>=80?'🌟':'🌱'}</span><div class="skill-body"><strong>${esc(({count:'Đếm số lượng',addition:'Phép cộng',subtraction:'Phép trừ',shapes:'Hình học cơ bản',time:'Thời gian',money:'Tiền và tính toán',vocab:'Từ vựng',letters:'Nhận biết chữ cái',reading:'Đọc hiểu',habitat:'Môi trường sống',plants:'Thực vật',health:'Sức khỏe cá nhân',nutrition:'Dinh dưỡng',safety:'An toàn cá nhân',environment:'Môi trường',energy:'Tiết kiệm năng lượng',water:'Tiết kiệm nước',patterns:'Nhận biết quy luật',sequence:'Trình tự',space:'Khoa học vũ trụ',english:'Tiếng Anh cơ bản',empathy:'Đồng cảm',emotions:'Cảm xúc',kindness:'Lòng tốt'}[k]||k))}</strong><small>${s.correct} câu đúng trên ${s.seen} lần trả lời · ${s.mastery>=80?'Đang rất tốt':'Tiếp tục luyện tập nhé'}</small><div class="skill-meter"><div style="width:${s.mastery}%"></div></div></div><strong>${s.mastery}%</strong></div>`).join(''):'<div class="empty">🌼 Bé hãy chơi bài đầu tiên để bắt đầu ghi nhận tiến bộ nhé!</div>'}</section><div class="section-head"><h2>📘 Gợi ý cho phụ huynh</h2></div><section class="panel"><p style="margin:0;font-size:13px;color:var(--muted)">Tỷ lệ đúng là chỉ số tham khảo. Để đánh giá ghi nhớ, hãy cho bé làm lại câu hỏi tương tự sau vài ngày và quan sát khả năng giải thích bằng lời của bé.</p></section>`}
 function renderProfile(){app.innerHTML=`${head('Góc cài đặt','Thiết lập trải nghiệm phù hợp cho bé')}<section class="panel"><div class="profile-row"><label for="age">Nhóm tuổi</label><select id="age"><option value="5-6" ${state.settings.age==='5-6'?'selected':''}>5–6 tuổi</option><option value="7-8" ${state.settings.age==='7-8'?'selected':''}>7–8 tuổi</option><option value="9-10" ${state.settings.age==='9-10'?'selected':''}>9–10 tuổi</option><option value="5-8" ${state.settings.age==='5-8'?'selected':''}>5–8 tuổi</option></select></div><div class="profile-row"><label for="sound">Âm thanh hướng dẫn</label><input id="sound" type="checkbox" ${state.settings.sound?'checked':''}></div><div class="profile-row"><label for="largeText">Chữ lớn</label><input id="largeText" type="checkbox" ${state.settings.largeText?'checked':''}></div><button class="primary full" data-action="saveSettings">Lưu cài đặt</button><button class="secondary full" data-action="reset">Đặt lại tiến độ trên thiết bị này</button></section><section class="panel" style="margin-top:12px"><strong>🔒 Riêng tư và an toàn</strong><p style="font-size:13px;color:var(--muted)">Bản MVP lưu tiến độ cục bộ trên thiết bị. Chưa có tài khoản, quảng cáo hay đồng bộ đám mây. Phụ huynh nên hỗ trợ trẻ khi sử dụng.</p></section>`}
-function stopSpeech(){if('speechSynthesis' in window){try{window.speechSynthesis.cancel()}catch{}}}
 function back(){stopSpeech();if(screen==='game'){screen='learn'}else if(screen==='world'){screen='home'}else if(screen==='result'){screen='home'}else screen='home';render()}
 document.addEventListener('click',e=>{
  const navBtn=e.target.closest('[data-tab]');if(navBtn){nav(navBtn.dataset.tab);return}

@@ -29,7 +29,7 @@ jobs:
         run: npx cap add ios
 
       - name: Sync Capacitor
-        run: npx cap sync ios
+        run: npm run build:web && npx cap sync android
 
       - name: Build for iOS Simulator (unsigned)
         run: |
@@ -48,12 +48,12 @@ jobs:
         run: |
           APP_PATH="build/DerivedData/Build/Products/Debug-iphonesimulator/App.app"
           test -d "$APP_PATH"
-          ditto -c -k --sequesterRsrc --keepParent "$APP_PATH" Be-Hoc-Vui-iOS-Simulator-App.zip
+          ditto -c -k --sequesterRsrc --keepParent "$APP_PATH" Vuong-Quoc-Dieu-Ki-iOS-Simulator-App.zip
 
       - name: Upload iOS Simulator artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Be-Hoc-Vui-iOS-Simulator-App
-          path: Be-Hoc-Vui-iOS-Simulator-App.zip
+          name: Vuong-Quoc-Dieu-Ki-iOS-Simulator-App
+          path: Vuong-Quoc-Dieu-Ki-iOS-Simulator-App.zip
           if-no-files-found: error
           retention-days: 14

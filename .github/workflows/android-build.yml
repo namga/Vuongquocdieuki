@@ -42,7 +42,7 @@ jobs:
         run: npx cap add android
 
       - name: Sync Capacitor
-        run: npx cap sync android
+        run: npm run build:web && npx cap sync android
 
       - name: Apply Bé Học Vui app icon
         run: npm run cap:android:icon
@@ -56,7 +56,7 @@ jobs:
       - name: Upload debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: Be-Hoc-Vui-Android-debug-APK
+          name: Vuong-Quoc-Dieu-Ki-Android-debug-APK
           path: android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 14
