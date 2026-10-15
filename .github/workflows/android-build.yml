@@ -20,23 +20,23 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
+          # Do not enable npm cache until package-lock.json is committed.
 
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '21'
-          cache: gradle
 
       - name: Install dependencies
         run: npm install
 
       - name: Verify web assets
         run: |
+          test -f package.json
+          test -f capacitor.config.json
           test -f www/index.html
           test -f www/app.js
-          test -f capacitor.config.json
 
       - name: Generate Android project
         run: npx cap add android
