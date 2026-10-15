@@ -64,10 +64,26 @@ function renderLearn(){app.innerHTML=`${head('Chọn chuyến phiêu lưu','Mỗ
 function renderWorld(){const w=worlds.find(x=>x.id===selectedWorld);const ls=lessons.filter(l=>l.world===selectedWorld);app.innerHTML=`${head(w.name,w.desc)}<div class="hero" style="min-height:135px"><h1 style="font-size:24px;max-width:72%">Cùng ${w.emoji} khám phá!</h1><p style="max-width:72%">Hoàn thành bài học để tích lũy kiến thức và sao.</p><div class="mascot">${w.emoji}</div></div><div class="section-head"><h2>Bài học trong vùng đất</h2><span>${ls.length} bài</span></div><div class="lesson-list">${ls.map(l=>lessonCard(l)).join('')}</div>`}
 function lessonCard(l){return `<button class="lesson-card" data-lesson="${l.id}"><span class="lesson-icon">${l.icon}</span><span class="lesson-info"><strong>${l.title}</strong><small>${l.age} · ${l.questions.length} câu · ${l.description}</small></span><span class="chevron">›</span></button>`}
 function startLesson(id){currentLesson=lessons.find(l=>l.id===id);if(!currentLesson)return;questionIndex=0;session={correct:0,firstTry:0,hints:0,answered:false,attempts:0,earned:0};state.lastPlayed=id;screen='game';render()}
+function speakQuestion(text){
+ if(!state.settings.sound || !('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)) return;
+ try {
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(String(text).replace(/[🔢⭐🌙🌞]/gu,' ').replace(/\.\.\./g,' '));
+  utterance.lang = 'vi-VN';
+  utterance.rate = 0.88;
+  utterance.pitch = 1.04;
+  const voices = window.speechSynthesis.getVoices();
+  const vietnameseVoice = voices.find(v => /^vi(-|$)/i.test(v.lang));
+  if (vietnameseVoice) utterance.voice = vietnameseVoice;
+  window.speechSynthesis.speak(utterance);
+ } catch (e) { /* Speech is an enhancement; gameplay must still work without TTS. */ }
+}
 function renderGame(){
  const l=currentLesson,q=l.questions[questionIndex];session.answered=false;
  const pct=Math.round(questionIndex/l.questions.length*100);
- app.innerHTML=`${head(l.title,`Câu ${questionIndex+1}/${l.questions.length} · ${l.age}`)}<section class="game-panel"><div class="question-label">CÙNG HỌC NÀO! ✨</div><div class="progress-line"><div style="width:${pct}%"></div></div><div class="question">${esc(q.prompt)}</div><div class="visual">${esc(q.visual)}</div><div class="answers">${q.answers.map((a,i)=>`<button class="answer" data-answer="${i}">${esc(a)}</button>`).join('')}</div><div id="feedback"></div><div class="game-actions"><button class="secondary" data-action="hint">💡 Gợi ý</button><button class="secondary" data-action="quit">Tạm dừng</button></div></section>`;
+ app.innerHTML=`${head(l.title,`Câu ${questionIndex+1}/${l.questions.length} · ${l.age}`)}<section class="game-panel"><div class="question-label">CÙNG HỌC NÀO! ✨</div><div class="progress-line"><div style="width:${pct}%"></div></div><div class="question-row"><div class="question">${esc(q.prompt)}</div><button class="speak-btn" data-action="speakQuestion" aria-label="Nghe lại câu hỏi" title="Nghe lại câu hỏi">🔊</button></div><div class="visual">${esc(q.visual)}</div><div class="answers">${q.answers.map((a,i)=>`<button class="answer" data-answer="${i}">${esc(a)}</button>`).join('')}</div><div id="feedback"></div><div class="game-actions"><button class="secondary" data-action="hint">💡 Gợi ý</button><button class="secondary" data-action="quit">Tạm dừng</button></div></section>`;
+ // Automatically read each question aloud when it appears. The speaker button can replay it.
+ setTimeout(() => { if(screen==='game' && currentLesson===l && questionIndex>=0) speakQuestion(q.prompt); }, 180);
 }
 function answer(index){
  if(session.answered)return;
@@ -91,7 +107,8 @@ const pets=[{id:'panda',name:'Gấu trúc Bông',emoji:'🐼',need:0},{id:'rabbi
 function renderCollection(){app.innerHTML=`${head('Bộ sưu tập','Những người bạn đồng hành của bé')}<section class="panel" style="margin-bottom:14px"><strong>🎒 Túi kho báu</strong><p style="margin:5px 0 0;color:var(--muted);font-size:13px">Bé có ${state.coins} xu ảo. Nhận thêm bằng cách học và khám phá.</p></section><div class="collection-grid">${pets.map(p=>{const unlocked=state.unlockedPets.includes(p.id)||state.completed.length>=p.need&&p.need===0;return `<div class="pet ${unlocked?'':'locked'}"><div class="pet-emoji">${unlocked?p.emoji:'🔒'}</div><strong>${p.name}</strong><small>${unlocked?'Bạn đồng hành của bé':`Hoàn thành ${p.need} bài để mở khóa`}</small></div>`}).join('')}</div><div class="section-head"><h2>🏡 Trang trí nhà</h2></div><section class="panel"><div style="font-size:44px;text-align:center">🏡 🌷 🌳</div><p style="text-align:center;color:var(--muted);font-size:13px">Góc nhà của bé sẽ có thêm đồ trang trí trong các bản cập nhật tiếp theo.</p></section>`}
 function renderProgress(){const attempts=state.attempts;const independent=attempts.filter(a=>a.correct&&a.firstTry).length;const accuracy=attempts.length?Math.round(attempts.filter(a=>a.correct).length/attempts.length*100):0;app.innerHTML=`${head('Tiến bộ của bé','Cùng nhìn lại những điều đã học')}<div class="stat-grid"><div class="stat"><strong>${state.completed.length}</strong><small>Bài hoàn thành</small></div><div class="stat"><strong>${accuracy}%</strong><small>Tỷ lệ đúng</small></div><div class="stat"><strong>${state.stars} ⭐</strong><small>Sao tích lũy</small></div></div><div class="section-head"><h2>🌱 Kỹ năng đang luyện</h2><span>${Object.keys(state.skills).length} kỹ năng</span></div><section class="panel">${Object.entries(state.skills).length?Object.entries(state.skills).map(([k,s])=>`<div class="skill-row"><span class="skill-emoji">${s.mastery>=80?'🌟':'🌱'}</span><div class="skill-body"><strong>${esc(({count:'Đếm số lượng',addition:'Phép cộng',vocab:'Từ vựng',habitat:'Môi trường sống',plants:'Thực vật',patterns:'Nhận biết quy luật',sequence:'Trình tự'}[k]||k))}</strong><small>${s.correct} câu đúng trên ${s.seen} lần trả lời · ${s.mastery>=80?'Đang rất tốt':'Tiếp tục luyện tập nhé'}</small><div class="skill-meter"><div style="width:${s.mastery}%"></div></div></div><strong>${s.mastery}%</strong></div>`).join(''):'<div class="empty">🌼 Bé hãy chơi bài đầu tiên để bắt đầu ghi nhận tiến bộ nhé!</div>'}</section><div class="section-head"><h2>📘 Gợi ý cho phụ huynh</h2></div><section class="panel"><p style="margin:0;font-size:13px;color:var(--muted)">Tỷ lệ đúng là chỉ số tham khảo. Để đánh giá ghi nhớ, hãy cho bé làm lại câu hỏi tương tự sau vài ngày và quan sát khả năng giải thích bằng lời của bé.</p></section>`}
 function renderProfile(){app.innerHTML=`${head('Góc cài đặt','Thiết lập trải nghiệm phù hợp cho bé')}<section class="panel"><div class="profile-row"><label for="age">Nhóm tuổi</label><select id="age"><option value="5-6" ${state.settings.age==='5-6'?'selected':''}>5–6 tuổi</option><option value="7-8" ${state.settings.age==='7-8'?'selected':''}>7–8 tuổi</option><option value="9-10" ${state.settings.age==='9-10'?'selected':''}>9–10 tuổi</option><option value="5-8" ${state.settings.age==='5-8'?'selected':''}>5–8 tuổi</option></select></div><div class="profile-row"><label for="sound">Âm thanh hướng dẫn</label><input id="sound" type="checkbox" ${state.settings.sound?'checked':''}></div><div class="profile-row"><label for="largeText">Chữ lớn</label><input id="largeText" type="checkbox" ${state.settings.largeText?'checked':''}></div><button class="primary full" data-action="saveSettings">Lưu cài đặt</button><button class="secondary full" data-action="reset">Đặt lại tiến độ trên thiết bị này</button></section><section class="panel" style="margin-top:12px"><strong>🔒 Riêng tư và an toàn</strong><p style="font-size:13px;color:var(--muted)">Bản MVP lưu tiến độ cục bộ trên thiết bị. Chưa có tài khoản, quảng cáo hay đồng bộ đám mây. Phụ huynh nên hỗ trợ trẻ khi sử dụng.</p></section>`}
-function back(){if(screen==='game'){screen='learn'}else if(screen==='world'){screen='home'}else if(screen==='result'){screen='home'}else screen='home';render()}
+function stopSpeech(){if('speechSynthesis' in window){try{window.speechSynthesis.cancel()}catch{}}}
+function back(){stopSpeech();if(screen==='game'){screen='learn'}else if(screen==='world'){screen='home'}else if(screen==='result'){screen='home'}else screen='home';render()}
 document.addEventListener('click',e=>{
  const navBtn=e.target.closest('[data-tab]');if(navBtn){nav(navBtn.dataset.tab);return}
  const world=e.target.closest('[data-world]');if(world){selectedWorld=world.dataset.world;screen='world';render();return}
@@ -104,11 +121,12 @@ document.addEventListener('click',e=>{
   case 'progress':nav('progress');break;
   case 'home':nav('home');break;
   case 'hint':showHint();break;
+  case 'speakQuestion':if(currentLesson && currentLesson.questions[questionIndex]) speakQuestion(currentLesson.questions[questionIndex].prompt);break;
   case 'next':nextQuestion();break;
-  case 'quit':if(confirm('Bé muốn tạm dừng bài này chứ? Tiến độ các câu đã trả lời vẫn được lưu.')){screen='learn';render()}break;
+  case 'quit':if(confirm('Bé muốn tạm dừng bài này chứ? Tiến độ các câu đã trả lời vẫn được lưu.')){stopSpeech();screen='learn';render()}break;
   case 'replay':startLesson(currentLesson.id);break;
   case 'nextLesson':nav('learn');break;
-  case 'saveSettings':state.settings.age=$('#age').value;state.settings.sound=$('#sound').checked;state.settings.largeText=$('#largeText').checked;save();document.body.classList.toggle('large-text',state.settings.largeText);toast('Đã lưu cài đặt!');nav('home');break;
+  case 'saveSettings':state.settings.age=$('#age').value;state.settings.sound=$('#sound').checked;state.settings.largeText=$('#largeText').checked;if(!state.settings.sound)stopSpeech();save();document.body.classList.toggle('large-text',state.settings.largeText);toast('Đã lưu cài đặt!');nav('home');break;
   case 'reset':if(confirm('Xóa toàn bộ tiến độ trên thiết bị này? Hành động này không thể hoàn tác.')){state=fresh();save();nav('home');toast('Đã đặt lại tiến độ')}break;
  }
 });

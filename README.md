@@ -8,6 +8,7 @@ Game giáo dục tiếng Việt cho trẻ 5–10 tuổi, dùng chung codebase We
 - Phản hồi giải thích, gợi ý, sao học tập, xu ảo và thú cưng mở khóa.
 - Tiến độ và kỹ năng lưu tự động bằng `localStorage`.
 - PWA cache offline cho các tệp lõi.
+- Tự động đọc câu hỏi bằng giọng tiếng Việt (`vi-VN`) khi mở mỗi câu; có nút loa để nghe lại và tắt âm thanh trong cài đặt.
 - GitHub Actions build APK Android và build app iOS Simulator.
 
 > Đây là MVP khởi đầu. Nội dung và giao diện cần được kiểm thử với trẻ/phụ huynh trước khi phát hành rộng rãi. Một số hình ảnh hiện dùng emoji để giữ dự án nhẹ và không phụ thuộc bộ ảnh thương mại.
