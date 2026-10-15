@@ -91,3 +91,8 @@ Tên hiển thị của ứng dụng đã đổi thành **Vương Quốc Diệu 
 
 ## Fix dependency for Capacitor 7
 The text-to-speech dependency is pinned to `^6.1.0`, which is a published version compatible with Capacitor 7. Version `^7.0.0` was not published, which caused npm `ETARGET / notarget` during dependency installation. The workflow uses `npm install` to resolve and install dependencies.
+
+
+### iOS Simulator build fix (Capacitor module resolution)
+
+The iOS GitHub Actions workflow now resolves native dependencies before compiling. If the generated iOS project contains a Podfile, it installs CocoaPods and builds `App.xcworkspace` so `import Capacitor` resolves through the Pods. If the project uses Swift Package Manager, it resolves package dependencies before building `App.xcodeproj`.

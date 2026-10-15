@@ -34,18 +34,45 @@ jobs:
       - name: Sync Capacitor for iOS
         run: npx cap sync ios
 
+      - name: Resolve iOS native dependencies
+        run: |
+          if [ -f ios/App/Podfile ]; then
+            echo "Podfile detected; install Capacitor CocoaPods dependencies."
+            pod install --project-directory=ios/App
+            echo "IOS_BUILD_MODE=workspace" >> "$GITHUB_ENV"
+          else
+            echo "No Podfile detected; resolve Swift Package Manager dependencies."
+            xcodebuild -resolvePackageDependencies \
+              -project ios/App/App.xcodeproj \
+              -scheme App
+            echo "IOS_BUILD_MODE=project" >> "$GITHUB_ENV"
+          fi
+
       - name: Build for iOS Simulator (unsigned)
         run: |
-          xcodebuild \
-            -project ios/App/App.xcodeproj \
-            -scheme App \
-            -configuration Debug \
-            -sdk iphonesimulator \
-            -destination 'generic/platform=iOS Simulator' \
-            -derivedDataPath build/DerivedData \
-            CODE_SIGNING_ALLOWED=NO \
-            ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS=NO \
-            build
+          if [ "$IOS_BUILD_MODE" = "workspace" ]; then
+            xcodebuild \
+              -workspace ios/App/App.xcworkspace \
+              -scheme App \
+              -configuration Debug \
+              -sdk iphonesimulator \
+              -destination 'generic/platform=iOS Simulator' \
+              -derivedDataPath build/DerivedData \
+              CODE_SIGNING_ALLOWED=NO \
+              ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS=NO \
+              build
+          else
+            xcodebuild \
+              -project ios/App/App.xcodeproj \
+              -scheme App \
+              -configuration Debug \
+              -sdk iphonesimulator \
+              -destination 'generic/platform=iOS Simulator' \
+              -derivedDataPath build/DerivedData \
+              CODE_SIGNING_ALLOWED=NO \
+              ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS=NO \
+              build
+          fi
 
       - name: Package simulator app
         run: |
