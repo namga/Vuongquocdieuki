@@ -87,3 +87,7 @@ Bản nội dung mở rộng có 15 bài học với khoảng 65 câu hỏi, g�
 
 ## Đổi tên ứng dụng
 Tên hiển thị của ứng dụng đã đổi thành **Vương Quốc Diệu Kì** cho PWA và dự án Capacitor Android/iOS. `appId` vẫn giữ nguyên `com.behocvui.vuongquockydieu` để bản cài mới có thể nâng cấp bản cũ thay vì xuất hiện như một ứng dụng khác. Sau khi đổi tên, cần chạy lại GitHub Actions để tên mới xuất hiện trên APK mới.
+
+
+## Fix dependency for Capacitor 7
+The text-to-speech dependency is pinned to `^6.1.0`, which is a published version compatible with Capacitor 7. Version `^7.0.0` was not published, which caused npm `ETARGET / notarget` during dependency installation. The workflow uses `npm install` to resolve and install dependencies.
